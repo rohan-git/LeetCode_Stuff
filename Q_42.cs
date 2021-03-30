@@ -4,6 +4,36 @@ using System;
 
 public class TrapRainWater
 {
+
+    public int Trap(int[] height) 
+    {
+        int amount = 0;
+
+        int[] lBoundaries = new int[height.Length];
+        int[] rBoundaries = new int[height.Length];
+
+        lBoundaries[0] = height[0];
+
+        for(int x = 1; x < height.Length; x++)
+        {
+            lBoundaries[x] = Math.Max(lBoundaries[x-1], height[x]);
+        }
+
+        lBoundaries[height.Length-1] = height[height.Length-1];
+
+        for(int x = height.Length - 2; x >= 0; x--)
+        {
+            rBoundaries[x] = Math.Max(rBoundaries[x+1], height[x]);
+        }
+
+        for(int x = 1; x < height.Length-1; x++)
+        {
+            amount += Math.Min(lBoundaries[x], rBoundaries[x]) - height[x];
+        }
+
+        return amount;
+    }
+
     public int TrapBruteForce(int[] height) 
     {
         int amount = 0;
